@@ -1,5 +1,6 @@
 Un análisis de datos de las interacciones virus-vertebrados usando una base de datos en grafos (neo4j). 
 El desarrollo del trabajo puede verse en el jupyter notebook en este repositorio. Para replicar este analisis es necesario:
+
   1- Descargar Neo4j Desktop. Tambien es posible replicar el analisis usando una herramienta alternativa, por ejemplo Neo4j Sandbox o Aura (en este último caso, 
      para usar la libreria Graph Data Science es necesario usar una cuenta de pago).
   
