@@ -1,0 +1,21 @@
+:auto LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/FelipeMaresca/TrabajoFinalBDNR2023/main/Temporal.csv' AS row FIELDTERMINATOR '\t'
+WITH row, toInteger(row.AssocID) AS assocID
+CALL {
+  WITH row, assocID
+  MATCH (v:Virus)-[r:Infecta_a]->(h:Host)
+  WHERE assocID IN [number IN split(r.AssocID, ', ') | toInteger(number)]
+  SET r.PublicationYear = COALESCE(r.PublicationYear, '') + CASE
+    WHEN r.PublicationYear IS NOT NULL THEN ', ' + row.PublicationYear
+    ELSE row.PublicationYear
+    END,
+    r.ReleaseDate = COALESCE(r.ReleaseDate, '') + CASE
+    WHEN r.ReleaseDate IS NOT NULL THEN ', ' + row.ReleaseDay + '-' + row.ReleaseMonth + '-' + row.ReleaseYear
+    ELSE row.ReleaseDay + '-' + row.ReleaseMonth + '-' + row.ReleaseYear
+    END,
+    r.CollectionDate = COALESCE(r.CollectionDate, '') + CASE
+    WHEN r.CollectionDate IS NOT NULL THEN ', ' + row.CollectionDay + '-' + row.CollectionMonth + '-' + row.CollectionYear
+    ELSE row.CollectionDay + '-' + row.CollectionMonth + '-' + row.CollectionYear
+    END
+}
+WITH count(*) AS rowCount
+RETURN rowCount

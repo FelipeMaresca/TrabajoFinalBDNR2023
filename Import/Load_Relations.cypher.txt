@@ -1,0 +1,8 @@
+:auto LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/FelipeMaresca/TrabajoFinalBDNR2023/main/Edgelist.csv' AS row
+CALL {
+ WITH row
+ MATCH (h:Host {HostTaxID: row.HostTaxID})
+ MATCH (v:Virus {VirusTaxID: row.VirusTaxID})
+ MERGE (h)<-[rel:Infecta_a {AssocID: row.AssocID}]-(v)
+} IN TRANSACTIONS OF 500 ROWS
+

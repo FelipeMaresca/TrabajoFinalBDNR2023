@@ -1,0 +1,16 @@
+
+MATCH (v:Virus) DETACH DELETE v;
+
+DROP CONSTRAINT UniqueVirusTaxID IF EXISTS;
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/FelipeMaresca/TrabajoFinalBDNR2023/main/TaxonomyVirus.csv' AS row
+WITH row
+CREATE (:Virus{
+    VirusTaxID: row.VirusTaxID,
+    Virus: row.Virus,
+    VirusGenus: row.VirusGenus,
+    VirusFamily: row.VirusFamily,
+    VirusOrder: row.VirusOrder,
+    VirusClass: row.VirusClass,
+    VirusNCBIResolved: row.VirusNCBIResolved
+})
